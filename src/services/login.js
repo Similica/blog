@@ -15,5 +15,5 @@ export const login = (email, password) => {
 //ovo je sinhrono prvo dobijem podatke pa onda odradjujem, a akcije su za asinhrone stvari kad se asinhrona mutacija izvrsi
 export const logout = () => {
   store.commit("clearLoggedInUser");
-  router.push({ name: "/" });
+  router.push({ path: "/" });
 };
