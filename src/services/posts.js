@@ -7,6 +7,7 @@ export const fetchPosts = async () => {
   console.log(response);
   return response.data.map((post) => {
     return {
+      id: post.id,
       title: post.title,
       body: post.body,
     };

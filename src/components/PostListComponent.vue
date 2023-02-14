@@ -1,11 +1,19 @@
 <template>
   <div>
     <h1>Postovi{{ user?.name }}</h1>
+    <button @click="logOutClicked" type="button">Odjava</button>
     <!-- <button @click="newPostClicked" type="button">Dodaj post</button> -->
     <div v-if="posts && posts.length" class="post">
       <div v-for="post in posts" :key="post.id">
         <h2>{{ post.title }}</h2>
         <p>{{ post.body }}</p>
+        <button
+          v-if="user?.role == 'admin'"
+          @click="deletePostClicked(post.id)"
+          type="button"
+        >
+          Obriši post
+        </button>
       </div>
     </div>
     <!-- <div v-if="errors && errors.length">
@@ -28,7 +36,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { logout } from "./../services/login.js";
+import { onMounted } from "vue";
+import { mapState, mapActions } from "vuex";
 //import axios from "axios";
 export default {
   name: "post-list-component",
@@ -44,21 +54,22 @@ export default {
   },
 
   methods: {
-    // async postPost() {
-    //   try {
-    //     await axios.post("https://jsonplaceholder.typicode.com/posts", {
-    //       title: this.title,
-    //       body: this.body,
-    //     });
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // },
+    logOutClicked() {
+      logout();
+    },
+    deletePostClicked() {},
+    ...mapActions(["getPosts"]), //akciju sad mogu kao metodu (vuex daje to umjesto dispatch)
   },
   computed: mapState({
     user: (state) => state.loggedInUser,
     posts: (state) => state.posts,
   }),
+  setup() {
+    onMounted(() => {
+      console.log("onMounted");
+      this.getPosts();
+    });
+  },
 };
 </script>
 

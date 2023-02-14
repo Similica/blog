@@ -13,10 +13,6 @@ export const store = createStore({
   },
   getters: {},
   mutations: {
-    // findPostById(id) {
-    //   return this.posts.find((post) => post.id === id);
-    // },
-
     setLoggedInUser(state, user) {
       state.loggedInUser = user;
     },
@@ -24,19 +20,11 @@ export const store = createStore({
     clearLoggedInUser(state) {
       state.loggedInUser = null;
     },
-    // setPosts(state, posts) {
-    //   state.posts = posts;
-    // },
+
     setPosts(state, postsData) {
       state.posts = postsData;
     },
   },
-  // addPost(state.post) {
-  //   state.posts.push(post);
-  // },
-  // deletePost(state,post) {
-  //   state.posts.removeItem(post);
-  // },
 
   actions: {
     login({ commit }, user) {
@@ -44,13 +32,6 @@ export const store = createStore({
     },
     async getPosts({ commit }) {
       commit("setPosts", await fetchPosts());
-    },
-
-    addPost({ commit }, post) {
-      commit("addPost", post);
-    },
-    deletePost({ commit }, post) {
-      commit("deletePost", post);
     },
   },
   fetchPosts({ commit }) {
