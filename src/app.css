@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap");
+:root {
+  --white: #e7e7e7;
+  --green: #a9d491;
+  --black: #25292b;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-image: url("./img.svg");
+  background-size: 100vw auto;
+}
+* {
+  font-family: "Zen Dots", cursive;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: 400;
+  padding: 0.5rem;
+  text-align: center;
+  font-family: "Zen Dots", normal;
+  color: #ffffff;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: var(--black);
+}
+button {
+  display: block;
+  background-color: var(--green);
+  color: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 0.5rem;
+  width: 190px;
+  height: 40px;
+}
+label {
+  font-size: 20px;
+  padding-bottom: 1rem;
+  display: block;
+}
+
+input {
+  margin-bottom: 1.8rem;
+  border: none;
+  border-bottom: 2px solid var(--black);
+  background-color: var(--white);
+  font-size: 16px;
+  width: 32rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--white) inset;
+  background-color: transparent !important;
+}
