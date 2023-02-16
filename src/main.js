@@ -4,7 +4,7 @@ import { store } from "./store/store";
 import { createRouter, createWebHistory } from "vue-router";
 import LoginComponent from "./components/LoginComponent.vue";
 import PostListComponent from "./components/PostListComponent.vue";
-import NewPostComponent from "./components/NewPostComponent.vue";
+import { NewPostComponent } from "./components/NewPostComponent.vue";
 export const router = createRouter({
   history: createWebHistory(),
   routes: [

@@ -27,19 +27,16 @@ export const store = createStore({
     setPosts(state, postsData) {
       state.posts = postsData;
     },
+    saveThisPost(state, post) {
+      state.posts = [post, ...state.posts];
+      console.log(state.posts);
+    },
 
     deletePost(state, postId) {
       state.posts = state.posts.filter((post) => post.id !== postId);
     },
-
     addPost(state, post) {
       state.posts = [post, ...state.posts];
-    },
-
-    editPost(state, post) {
-      const editedPost = state.posts.find((p) => p.id == post.id);
-      editedPost.title = post.title;
-      editedPost.body = post.body;
     },
   },
   actions: {
