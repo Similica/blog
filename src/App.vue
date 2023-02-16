@@ -1,7 +1,6 @@
 <template>
   <div>
     <router-view />
-    <post-list-component />
   </div>
 </template>
 

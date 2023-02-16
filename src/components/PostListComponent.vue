@@ -23,10 +23,10 @@
     </div>
 
     <div class="all-posts" v-if="posts && posts.length">
-      <post-component
+      <PostComponent
         v-for="post in filteredPosts"
         :key="post.id"
-        post="post"
+        :post="post"
       />
     </div>
   </div>
@@ -34,11 +34,11 @@
 
 <script>
 import { logout } from "./../services/login.js";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
+import PostComponent from "./PostComponent.vue";
 export default {
   name: "post-list-component",
-  props: ["post-component"],
-  components: {},
+  components: { PostComponent },
   data() {
     return {
       title: "",
@@ -48,13 +48,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["deletePost"]),
-
     logOutClicked() {
       logout();
-    },
-    deletePostClicked(id) {
-      this.deletePost(id);
     },
 
     addPostClicked() {
@@ -102,23 +97,9 @@ input {
   align-items: center;
 }
 
-.btn-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
 .all-posts {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.post-container {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  border-radius: 0.5rem;
-  background-color: var(--white);
-  padding: 3rem;
-  margin: 2rem;
 }
 </style>
