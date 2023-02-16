@@ -3,19 +3,17 @@
     <input
       class="update1"
       ref="update1"
-      v-model="title"
+      v-model="postCopy.title"
       type="text"
-      :placeholder="post.title"
-      disabled
+      :disabled="!isEdit"
     />
     <textarea
       class="update-post-body"
       ref="update-post-body"
-      v-model="body"
+      v-model="postCopy.body"
       type="text"
-      :placeholder="post.body"
       rows="5"
-      disabled
+      :disabled="!isEdit"
     />
     <div class="btn-container">
       <button
@@ -26,47 +24,63 @@
         Obriši post
       </button>
       <button
-        v-if="user?.role == 'admin'"
-        @click="
-          {
-            console.log(klik);
-            body.disabled = false;
-            title.disabled = false;
-          }
-        "
+        v-if="user?.role == 'admin' && !isEdit"
+        @click="editClicked"
         type="button"
       >
         Izmjeni post
+      </button>
+      <button
+        v-if="user?.role == 'admin' && isEdit"
+        @click="saveClicked"
+        type="button"
+      >
+        Sačuvaj
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import { logout } from "./../services/login.js";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "post-component",
+  data() {
+    return {
+      isEdit: false,
+      postCopy: {},
+    };
+  },
+
   props: {
     post: {
-      id: "",
-      title: "",
-      body: "",
+      type: Object,
+      default: () => ({ id: "", title: "", body: "" }),
     },
   },
   components: {},
 
   methods: {
-    ...mapMutations(["deletePost"]),
+    ...mapMutations(["deletePost", "editPost"]),
 
     deletePostClicked(id) {
       this.deletePost(id);
+    },
+    editClicked() {
+      this.isEdit = true;
+    },
+    saveClicked() {
+      this.editPost(this.postCopy);
+      this.isEdit = false;
     },
   },
   computed: {
     ...mapState({
       user: (state) => state.loggedInUser,
     }),
+  },
+  mounted() {
+    this.postCopy = { ...this.post };
   },
 };
 </script>

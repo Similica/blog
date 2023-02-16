@@ -17,15 +17,7 @@ export default {
   name: "login-component",
   props: {},
   components: {},
-  // computed: {
-  //   homePage() {
-  //     if (this.$route.path === "/") {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  // },
+
   data() {
     return {
       email: "",

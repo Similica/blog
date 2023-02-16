@@ -12,7 +12,6 @@ export const login = (email, password) => {
     alert("Korisnik sa datim kredencijalima ne postoji");
   }
 };
-//ovo je sinhrono prvo dobijem podatke pa onda odradjujem, a akcije su za asinhrone stvari kad se asinhrona mutacija izvrsi
 export const logout = () => {
   store.commit("clearLoggedInUser");
   router.push({ path: "/" });
