@@ -18,9 +18,3 @@ export const logout = () => {
   router.push({ path: "/" });
   console.log("ser");
 };
-
-export const postsPage = () => {
-  // router.push({ path: "/posts" });
-  router.back();
-  console.log("u servisu");
-};

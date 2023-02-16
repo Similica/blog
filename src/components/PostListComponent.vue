@@ -70,8 +70,7 @@
 
 <script>
 import { logout } from "./../services/login.js";
-import { addPost } from "./../services/posts.js";
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "post-list-component",
   props: ["post-component"],
@@ -86,7 +85,6 @@ export default {
 
   methods: {
     ...mapMutations(["deletePost"]),
-    ...mapActions(["getPosts", "addPost"]), //akciju sad mogu kao metodu (vuex daje to umjesto dispatch)
 
     logOutClicked() {
       logout();
@@ -96,7 +94,7 @@ export default {
     },
 
     addPostClicked() {
-      addPost();
+      this.$router.push("/posts/new");
     },
   },
   computed: {
@@ -112,13 +110,6 @@ export default {
         );
       });
     },
-  },
-
-  mounted() {
-    this.getPosts();
-  },
-  unmounted() {
-    this.getPosts();
   },
 };
 </script>

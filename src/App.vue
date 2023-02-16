@@ -6,9 +6,17 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "App",
   components: {},
+  methods: {
+    ...mapActions(["getPosts"]),
+  },
+  mounted() {
+    this.getPosts();
+  },
 };
 </script>
 

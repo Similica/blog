@@ -9,18 +9,12 @@ export const store = createStore({
       email: "",
       role: "",
     },
-    post: {
-      postId: "",
-      title: "",
-      body: "",
-    },
+
     posts: [],
   },
   getters: {},
   mutations: {
-    // findPostById(id) {
-    //   return this.posts.find((post) => post.id === id);
-    // },
+    // dispach za akcije commit za mutacije
 
     setLoggedInUser(state, user) {
       state.loggedInUser = user;
@@ -29,9 +23,7 @@ export const store = createStore({
     clearLoggedInUser(state) {
       state.loggedInUser = null;
     },
-    // setPosts(state, posts) {
-    //   state.posts = posts;
-    // },
+
     setPosts(state, postsData) {
       state.posts = postsData;
     },
@@ -39,17 +31,12 @@ export const store = createStore({
       state.posts = [post, ...state.posts];
       console.log(state.posts);
     },
-    // setPost(state, postId) {
-    //   state.post = findPostById(postId);
-    // },
-    // addPost(state.post) {
-    //   state.posts.push(post);
-    // },
-    // deletePost(state,post) {
-    //   state.posts.removeItem(post);
-    // },
+
     deletePost(state, postId) {
       state.posts = state.posts.filter((post) => post.id !== postId);
+    },
+    addPost(state, post) {
+      state.posts = [post, ...state.posts];
     },
   },
   actions: {
@@ -61,8 +48,8 @@ export const store = createStore({
       commit("setPosts", await fetchPosts());
     },
 
-    deletePost({ commit }, post) {
-      commit("deletePost", post);
+    deletePost({ commit }, postId) {
+      commit("deletePost", postId);
     },
   },
   fetchPosts({ commit }) {

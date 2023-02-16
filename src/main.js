@@ -20,7 +20,7 @@ export const router = createRouter({
       component: PostListComponent,
     },
     {
-      path: "/post",
+      path: "/posts/new",
       name: "post",
       component: PostComponent,
     },

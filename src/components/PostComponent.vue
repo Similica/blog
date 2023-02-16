@@ -7,63 +7,49 @@
     <div class="form">
       <h1>Novi post</h1>
 
-      <input v-model="title" type="text" placeholder="Naslov" />
-      <textarea v-model="body" type="text" placeholder="Sadržaj" rows="5" />
-      <button @click="storePost" type="button">Objavi</button>
+      <input v-model="post.title" type="text" placeholder="Naslov" />
+      <textarea
+        v-model="post.body"
+        type="text"
+        placeholder="Sadržaj"
+        rows="5"
+      />
+      <button @click="addPostClicked()" type="button">Objavi</button>
     </div>
   </div>
 </template>
 
 <script>
-import { logout, postsPage } from "./../services/login.js";
-import { addPost } from "@/services/posts";
-import { mapState, mapActions } from "vuex";
+import { logout } from "./../services/login.js";
+import { mapMutations } from "vuex";
 export default {
   name: "post-component",
   props: {},
   components: {},
   data() {
     return {
-      title: "",
-      body: "",
+      post: {
+        id: "",
+        title: "",
+        body: "",
+      },
     };
   },
 
-  computed: {
-    ...mapState({
-      user: (state) => state.loggedInUser,
-      posts: (state) => state.posts,
-    }),
-  },
-
   methods: {
-    ...mapActions(["addPost", "getPosts"]),
+    ...mapMutations(["addPost"]),
 
-    deletePost(value) {
-      this.$store.dispatch("deletePost", value); //dispatch zove druge fje
-    },
     logOutClicked() {
       logout();
     },
     backClicked() {
-      console.log("back");
-      postsPage();
+      this.$router.back();
     },
-    storePost() {
-      console.log("store");
-      addPost();
+    addPostClicked() {
+      this.post.id = Date.now();
+      this.addPost(this.post);
+      this.$router.push("/posts");
     },
-    setTitle(value) {
-      this.title = value;
-    },
-
-    setBody(value) {
-      this.Bbody = value;
-    },
-  },
-
-  mounted() {
-    this.getPosts();
   },
 };
 </script>
