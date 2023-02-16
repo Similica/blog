@@ -4,8 +4,7 @@ import { store } from "./store/store";
 import { createRouter, createWebHistory } from "vue-router";
 import LoginComponent from "./components/LoginComponent.vue";
 import PostListComponent from "./components/PostListComponent.vue";
-import PostComponent from "./components/PostComponent.vue";
-
+import { NewPostComponent } from "./components/NewPostComponent.vue";
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -22,7 +21,7 @@ export const router = createRouter({
     {
       path: "/posts/new",
       name: "post",
-      component: PostComponent,
+      component: NewPostComponent,
     },
   ],
 });

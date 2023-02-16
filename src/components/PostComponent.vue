@@ -1,82 +1,99 @@
 <template>
-  <div>
-    <div class="header-btns">
-      <button id="back-btn" @click="backClicked" type="button">Nazad</button>
-      <button @click="logOutClicked" type="button">Odjava</button>
-    </div>
-    <div class="form">
-      <h1>Novi post</h1>
-
-      <input v-model="post.title" type="text" placeholder="Naslov" />
-      <textarea
-        v-model="post.body"
-        type="text"
-        placeholder="Sadržaj"
-        rows="5"
-      />
-      <button @click="addPostClicked()" type="button">Objavi</button>
+  <div class="post-container">
+    <input
+      class="update1"
+      ref="update1"
+      v-model="title"
+      type="text"
+      :placeholder="post.title"
+      disabled
+    />
+    <textarea
+      class="update-post-body"
+      ref="update-post-body"
+      v-model="body"
+      type="text"
+      :placeholder="post.body"
+      rows="5"
+      disabled
+    />
+    <div class="btn-container">
+      <button
+        v-if="user?.role == 'admin'"
+        @click="deletePostClicked(post.id)"
+        type="button"
+      >
+        Obriši post
+      </button>
+      <button
+        v-if="user?.role == 'admin'"
+        @click="
+          {
+            console.log(klik);
+            body.disabled = false;
+            title.disabled = false;
+          }
+        "
+        type="button"
+      >
+        Izmjeni post
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { logout } from "./../services/login.js";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "post-component",
-  props: {},
-  components: {},
-  data() {
-    return {
-      post: {
-        id: "",
-        title: "",
-        body: "",
-      },
-    };
+  props: {
+    post: {
+      id: "",
+      title: "",
+      body: "",
+    },
   },
+  components: {},
 
   methods: {
-    ...mapMutations(["addPost"]),
+    ...mapMutations(["deletePost"]),
 
-    logOutClicked() {
-      logout();
+    deletePostClicked(id) {
+      this.deletePost(id);
     },
-    backClicked() {
-      this.$router.back();
-    },
-    addPostClicked() {
-      this.post.id = Date.now();
-      this.addPost(this.post);
-      this.$router.push("/posts");
-    },
+  },
+  computed: {
+    ...mapState({
+      user: (state) => state.loggedInUser,
+    }),
   },
 };
 </script>
 
 <style scoped>
-.post {
-  padding: 1rem;
-  margin: 1rem 10rem;
-  border: 1px solid var(--black);
-  border-radius: 8px;
-  background: var(--white);
-  align-content: center;
+p {
+  margin: 2rem;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--white);
-  margin: 1rem auto;
-  padding: 0 4rem;
-  border-radius: 0.5rem;
-  width: fit-content;
+textarea,
+input {
+  border: none;
 }
-.header-btns {
+
+.btn-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  padding: 3rem;
+  margin: 2rem;
 }
 </style>

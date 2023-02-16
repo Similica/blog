@@ -23,47 +23,11 @@
     </div>
 
     <div class="all-posts" v-if="posts && posts.length">
-      <div class="post-container" v-for="post in filteredPosts" :key="post.id">
-        <input
-          class="update1"
-          ref="update1"
-          v-model="title"
-          type="text"
-          :placeholder="post.title"
-          disabled
-        />
-        <textarea
-          class="update-post-body"
-          ref="update-post-body"
-          v-model="body"
-          type="text"
-          :placeholder="post.body"
-          rows="5"
-          disabled
-        />
-        <div class="btn-container">
-          <button
-            v-if="user?.role == 'admin'"
-            @click="deletePostClicked(post.id)"
-            type="button"
-          >
-            Obriši post
-          </button>
-          <button
-            v-if="user?.role == 'admin'"
-            @click="
-              {
-                console.log(klik);
-                body.disabled = false;
-                title.disabled = false;
-              }
-            "
-            type="button"
-          >
-            Izmjeni post
-          </button>
-        </div>
-      </div>
+      <post-component
+        v-for="post in filteredPosts"
+        :key="post.id"
+        post="post"
+      />
     </div>
   </div>
 </template>
