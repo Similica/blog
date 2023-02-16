@@ -1,64 +1,103 @@
 <template>
   <div>
-    <h1>Postovi{{ user?.name }}</h1>
-    <input v-model="searchValue" type="text" placeholder="Pretraga" />
-    <button @click="logOutClicked" type="button">Odjava</button>
-    <!-- <button @click="newPostClicked" type="button">Dodaj post</button> -->
-    <div v-if="posts && posts.length" class="post">
-      <div v-for="post in filteredPosts" :key="post.id">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.body }}</p>
+    <div class="header">
+      <input
+        v-model="searchValue"
+        class="search"
+        type="text"
+        placeholder="Pretraga.."
+      />
+      <span><i class="fa-solid fa-magnifying-glass"></i></span>
+      <div class="header-btns">
         <button
           v-if="user?.role == 'admin'"
-          @click="deletePostClicked(post.id)"
+          @click="addPostClicked()"
           type="button"
         >
-          Obriši post
+          Dodaj post<span
+            ><font-awesome-icon icon="fa-solid fa-magnifying-glass"
+          /></span>
         </button>
+        <button @click="logOutClicked" type="button">Odjava</button>
       </div>
     </div>
-    <!-- <div v-if="errors && errors.length">
-      <div v-for="errors in errors">{{ error.message }}</div>
-    </div> -->
-    <!-- <div class="post-form">
-      <input type="text" v-model="title" />
-      <input type="text" v-model="body" />
+
+    <div class="all-posts" v-if="posts && posts.length">
+      <div class="post-container" v-for="post in filteredPosts" :key="post.id">
+        <input
+          class="update1"
+          ref="update1"
+          v-model="title"
+          type="text"
+          :placeholder="post.title"
+          disabled
+        />
+        <textarea
+          class="update-post-body"
+          ref="update-post-body"
+          v-model="body"
+          type="text"
+          :placeholder="post.body"
+          rows="5"
+          disabled
+        />
+        <div class="btn-container">
+          <button
+            v-if="user?.role == 'admin'"
+            @click="deletePostClicked(post.id)"
+            type="button"
+          >
+            Obriši post
+          </button>
+          <button
+            v-if="user?.role == 'admin'"
+            @click="
+              {
+                console.log(klik);
+                body.disabled = false;
+                title.disabled = false;
+              }
+            "
+            type="button"
+          >
+            Izmjeni post
+          </button>
+        </div>
+      </div>
     </div>
-    <button @click="postPost">Objavi post</button> -->
-    <!-- <button
-        @click="deletePostClicked({item.getTitle(),item.getBody()}) type="button" >
-        Obriši post
-      </button> -->
-    <!-- <div v-if="state.loggedInUser.role == 'admin'">
-        <button>Izmijeni</button>
-        <button></button>
-      </div> -->
   </div>
 </template>
 
 <script>
 import { logout } from "./../services/login.js";
-import { mapState, mapActions } from "vuex";
-//import axios from "axios";
+import { addPost } from "./../services/posts.js";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "post-list-component",
   props: ["post-component"],
   components: {},
   data() {
     return {
-      // title: "",
-      // body: "",
+      title: "",
+      body: "",
       searchValue: "",
-      errors: [],
     };
   },
 
   methods: {
+    ...mapMutations(["deletePost"]),
+    ...mapActions(["getPosts", "addPost"]), //akciju sad mogu kao metodu (vuex daje to umjesto dispatch)
+
     logOutClicked() {
       logout();
     },
-    deletePostClicked() {},
-    ...mapActions(["getPosts"]), //akciju sad mogu kao metodu (vuex daje to umjesto dispatch)
+    deletePostClicked(id) {
+      this.deletePost(id);
+    },
+
+    addPostClicked() {
+      addPost();
+    },
   },
   computed: {
     ...mapState({
@@ -78,15 +117,53 @@ export default {
   mounted() {
     this.getPosts();
   },
+  unmounted() {
+    this.getPosts();
+  },
 };
 </script>
 
 <style scoped>
-h1 {
+p {
   margin: 2rem;
 }
-.post-form {
+
+.search {
+  margin: 2rem;
+  border-radius: 0.5rem;
+  height: 40px;
+}
+textarea,
+input {
+  border: none;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.all-posts {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  padding: 3rem;
+  margin: 2rem;
 }
 </style>

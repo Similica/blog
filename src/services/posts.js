@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import { store } from "./../store/store";
+import { router } from "./../main";
 export const fetchPosts = async () => {
   const response = await axios.get(
     "https://jsonplaceholder.typicode.com/posts"
@@ -12,4 +13,9 @@ export const fetchPosts = async () => {
       body: post.body,
     };
   });
+};
+
+export const addPost = () => {
+  store.commit("saveThisPost");
+  router.push({ path: "post" });
 };

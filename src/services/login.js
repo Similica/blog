@@ -16,4 +16,11 @@ export const login = (email, password) => {
 export const logout = () => {
   store.commit("clearLoggedInUser");
   router.push({ path: "/" });
+  console.log("ser");
+};
+
+export const postsPage = () => {
+  // router.push({ path: "/posts" });
+  router.back();
+  console.log("u servisu");
 };

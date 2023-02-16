@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <h1>VRTLARSKI BLOG</h1>
+    <h1>VRTLARSKI PODSJETNIK</h1>
   </div>
   <div class="form">
     <label>E-mail</label>
@@ -35,6 +35,7 @@ export default {
   methods: {
     loginClicked() {
       login(this.email, this.password);
+      console.log("login");
     },
   },
 };
@@ -51,5 +52,9 @@ export default {
 .banner {
   background-color: var(--green);
   margin: 4rem 0;
+}
+button {
+  display: block;
+  margin: 0;
 }
 </style>

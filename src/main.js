@@ -4,6 +4,7 @@ import { store } from "./store/store";
 import { createRouter, createWebHistory } from "vue-router";
 import LoginComponent from "./components/LoginComponent.vue";
 import PostListComponent from "./components/PostListComponent.vue";
+import PostComponent from "./components/PostComponent.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -17,6 +18,11 @@ export const router = createRouter({
       path: "/posts",
       name: "posts",
       component: PostListComponent,
+    },
+    {
+      path: "/post",
+      name: "post",
+      component: PostComponent,
     },
   ],
 });
